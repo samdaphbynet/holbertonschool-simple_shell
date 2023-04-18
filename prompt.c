@@ -40,8 +40,10 @@ void prompt(char **argv, char **env)
 		j = 0;
 		av[0] = strtok(str, " ");
 
-		while (av[j])
+		while (j < MAX_CMD - 1 && av[j])
 			av[++j] = strtok(NULL, " ");
+		if (j == 0)
+			continue;
 		child_pid = fork();
 
 		if (child_pid == -1)
@@ -56,7 +58,13 @@ void prompt(char **argv, char **env)
 		}
 		else
 		{
-			wait(&status);
+			if (waitpid(child_pid, &status, 0) == -1)
+			{
+				free(str);
+                		exit(EXIT_FAILURE);
+			}
+			if (WIFEXITED(status))
+				status = WEXITSTATUS(status);
 		}
 	}
 }
