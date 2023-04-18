@@ -1,5 +1,7 @@
 #include "shell.h"
 
+#define MAX_CMD 20
+
 /**
  *
  *
@@ -8,11 +10,11 @@
 void prompt(char **argv, char **env)
 {
 	char *str = NULL;
-	int i;
+	int i, j;
 	int status = 0;
 	size_t n = 0;
 	ssize_t num_char;
-	char *av[] = {NULL, NULL};
+	char *av[MAX_CMD];
 	pid_t child_pid;
 
 	while (1)
@@ -34,7 +36,12 @@ void prompt(char **argv, char **env)
 				str[i] = 0;
 			i++;
 		}
-		av[0] = str;
+
+		j = 0;
+		av[0] = strtok(str, " ");
+
+		while (av[j])
+			av[++j] = strtok(NULL, " ");
 		child_pid = fork();
 
 		if (child_pid == -1)
