@@ -5,7 +5,7 @@
  *
  */
 
-void read_line(char **argv, char **env)
+void prompt(char **argv, char **env)
 {
 	char *str = NULL;
 	int i, status;
