@@ -8,7 +8,7 @@
 void prompt(char **argv, char **env)
 {
 	char *str = NULL;
-	int i, status;
+	int i;
 	size_t n = 0;
 	ssize_t num_char;
 	char *av[] = {NULL, NULL};
@@ -48,7 +48,7 @@ void prompt(char **argv, char **env)
 		}
 		else
 		{
-			wait(&status);
+			wait(NULL);
 		}
 	}
 }
