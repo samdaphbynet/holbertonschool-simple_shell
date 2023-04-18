@@ -24,7 +24,7 @@ void prompt(char **argv, char **env)
 		if (num_char == -1)
 		{
 			free(str);
-			exit(EXIT_FAILURE);
+			exit(status);
 		}
 		i = 0;
 
