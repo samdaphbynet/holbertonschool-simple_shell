@@ -9,6 +9,7 @@ void prompt(char **argv, char **env)
 {
 	char *str = NULL;
 	int i;
+	int status = 0;
 	size_t n = 0;
 	ssize_t num_char;
 	char *av[] = {NULL, NULL};
@@ -23,7 +24,7 @@ void prompt(char **argv, char **env)
 		if (num_char == -1)
 		{
 			free(str);
-			exit(EXIT_FAILURE);
+			exit(status);
 		}
 		i = 0;
 
@@ -39,7 +40,7 @@ void prompt(char **argv, char **env)
 		if (child_pid == -1)
 		{
 			free(str);
-			exit(EXIT_FAILURE);
+			exit(status);
 		}
 		if (child_pid == 0)
 		{
@@ -48,7 +49,7 @@ void prompt(char **argv, char **env)
 		}
 		else
 		{
-			wait(NULL);
+			wait(&status);
 		}
 	}
 }
