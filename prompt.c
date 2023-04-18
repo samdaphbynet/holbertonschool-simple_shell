@@ -24,7 +24,7 @@ void prompt(char **argv, char **env)
 		if (num_char == -1)
 		{
 			free(str);
-			exit(status);
+			exit(EXIT_FAILURE);
 		}
 		i = 0;
 
@@ -40,7 +40,7 @@ void prompt(char **argv, char **env)
 		if (child_pid == -1)
 		{
 			free(str);
-			exit(status);
+			exit(EXIT_FAILURE);
 		}
 		if (child_pid == 0)
 		{
