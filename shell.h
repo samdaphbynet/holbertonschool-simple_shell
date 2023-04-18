@@ -10,7 +10,5 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-#define MAX_LINE 80
-
-
+void prompt(char **argv, char **env);
 #endif
