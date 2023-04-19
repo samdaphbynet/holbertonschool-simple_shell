@@ -12,7 +12,6 @@
 
 #define MAX_CMD 20
 
-void prompt(char **argv, char **env);
-void exec_cmd(char **av, char **env, int *status);
-void read_cmd(char **av);
+void execute_cmd(char **argv);
+char *get_location(char *cmd);
 #endif
