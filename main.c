@@ -23,7 +23,7 @@ int main(int ac, char **argv)
 		if (num_char == -1)
 		{
 			free(str);
-			exit(EXIT_FAILURE);
+			exit(0);
 		}
 		str_cpy = malloc(sizeof(char *) * num_char);
 
