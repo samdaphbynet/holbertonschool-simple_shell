@@ -11,7 +11,7 @@ int main(int ac, char **argv)
 	const char *delim = " \n";
 	size_t n = 0;
 	ssize_t num_char;
-	int num_tokens = 0, i;
+	int num_tokens = 0, i, status = 0;
 	(void)ac;
 
 	while (1)
@@ -23,7 +23,7 @@ int main(int ac, char **argv)
 		if (num_char == -1)
 		{
 			free(str);
-			exit(0);
+			exit(status);
 		}
 		str_cpy = malloc(sizeof(char *) * num_char);
 
