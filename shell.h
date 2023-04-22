@@ -10,8 +10,14 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-#define MAX_CMD 20
+#define SHELL_TOKEN 64
+#define SHELL_DELIM " \t\r\n\a"
 
-void execute_cmd(char **argv);
-char *get_location(char *cmd);
+int shell_launch(char **args);
+char *shell_readline(void);
+char **shell_split(char *line);
+void shell_loop(void);
+int shell_exit(char **args);
+int shell_builtins(void);
+int shell_execute(char **args);
 #endif
