@@ -11,7 +11,8 @@ void hsh_loop(void)
         int status = 0;
 
         do {
-                printf("#CisFun$ ");
+		if (isatty(STDIN_FILENO))
+                	printf("#CisFun$ ");
                 line = hsh_read_line(0, NULL);
                 args = hsh_split_line(line);
                 status = hsh_execute(args);
