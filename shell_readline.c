@@ -18,8 +18,9 @@ char *hsh_read_line(int argc, char **argv)
         int bufsize = HSH_RL_BUFSIZE;
         int position = 0;
         char *buffer = malloc(sizeof(char) * bufsize);
+	char *cmdline_args;
         int c, i;
-        char *cmdline_args = "";
+        int cmdline_args_len = 0;
 
         if (!buffer)
         {
@@ -27,12 +28,28 @@ char *hsh_read_line(int argc, char **argv)
                 exit(EXIT_FAILURE);
         }
 
-        for (i = 1; i < argc; i++) {
-            cmdline_args = strcat(cmdline_args, argv[i]);
-            cmdline_args = strcat(cmdline_args, " ");
+        for (i = 1; i < argc; i++) 
+	{
+		cmdline_args_len += strlen(argv[i]) + 1;
         }
 
+	cmdline_args = malloc(sizeof(char) * cmdline_args_len);
+
+	if (!cmdline_args)
+	{
+		fprintf(stderr, "./shell: Error");
+		exit(EXIT_FAILURE);
+	}
+	
+	cmdline_args[0] = '\0';
+
+	for (i = 0; i < argc; i++)
+	{
+		strcat(cmdline_args, argv[i]);
+		strcat(cmdline_args, " ");
+	}
         strcat(buffer, cmdline_args);
+	free(cmdline_args);
         while (1)
         {
                 /* Read a character */

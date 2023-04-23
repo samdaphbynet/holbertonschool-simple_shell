@@ -16,8 +16,5 @@ void hsh_loop(void)
                 line = hsh_read_line(0, NULL);
                 args = hsh_split_line(line);
                 status = hsh_execute(args);
-
-                free(line);
-                free(args);
         } while (status);
 }
