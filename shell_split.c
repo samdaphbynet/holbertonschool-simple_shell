@@ -6,7 +6,7 @@
  */
 char **hsh_split_line(char *line)
 {
-	int bufsize = SHELL_TOKEN, position = 0;
+	int bufsize = HSH_TOK_BUFSIZE, position = 0;
 	char **tokens;
 	char *token;
 
@@ -17,7 +17,7 @@ char **hsh_split_line(char *line)
 		fprintf(stderr, "./shell: Error\n");
 		exit(EXIT_FAILURE);
 	}
-	token = strtok(line, SHELL_DELIM);
+	token = strtok(line, HSH_TOK_DELIM);
 
 	while (token != NULL)
 	{
@@ -26,7 +26,7 @@ char **hsh_split_line(char *line)
 
 		if (position >= bufsize)
 		{
-			bufsize += SHELL_TOKEN;
+			bufsize += HSH_TOK_BUFSIZE;
 			tokens = realloc(tokens, bufsize * sizeof(char *));
 
 			if (!tokens)
@@ -35,7 +35,7 @@ char **hsh_split_line(char *line)
 				exit(EXIT_FAILURE);
 			}
 		}
-		token = strtok(NULL, SHELL_DELIM);
+		token = strtok(NULL, HSH_TOK_DELIM);
 	}
 	tokens[position] = NULL;
 	return (tokens);

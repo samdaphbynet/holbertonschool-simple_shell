@@ -10,8 +10,8 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-#define SHELL_TOKEN 64
-#define SHELL_DELIM " \t\r\n\a"
+#define HSH_TOK_BUFSIZE 64
+#define HSH_TOK_DELIM " \t\r\n\a"
 
 int hsh_exit(char **args);
 

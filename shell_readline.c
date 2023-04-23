@@ -43,7 +43,7 @@ char *hsh_read_line(int argc, char **argv)
 	
 	cmdline_args[0] = '\0';
 
-	for (i = 0; i < argc; i++)
+	for (i = 1; i < argc; i++)
 	{
 		strcat(cmdline_args, argv[i]);
 		strcat(cmdline_args, " ");
