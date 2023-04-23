@@ -42,7 +42,7 @@ int shell_execute(char **args)
 int shell_exit(char **args)
 {
         if (args[0] == NULL)
-                return (0);
+                return (1);
         else
                 return (0);
 }
