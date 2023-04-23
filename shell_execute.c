@@ -32,7 +32,10 @@ int shell_execute(char **args)
 		if (strcmp(args[0], builtin_str[i]) == 0)
 			return ((builtin_func[i])(args));
 	}
-	return (shell_launch(args));
+	if (shell_launch(args) == 0)
+		return (0);
+	else
+		return (1);
 }
 
 
