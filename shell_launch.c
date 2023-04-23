@@ -23,7 +23,7 @@ int shell_launch(char **args)
 		if (execvp(args[0], args) == -1)
 		{
 			perror("./shell");
-			exit(status);
+			exit(EXIT_FAILURE);
 		}
 	}
 	else
@@ -33,5 +33,5 @@ int shell_launch(char **args)
 			waitpid(child_pid, &status, WUNTRACED);
 		} while (!WIFEXITED(status) && !WIFSIGNALED(status));
 	}
-	return (1);
+	return (status);
 }
