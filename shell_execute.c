@@ -34,15 +34,14 @@ int shell_execute(char **args)
 	}
 	if (shell_launch(args) == 0)
 		return (0);
-	else
-		return (1);
+	return (1);
 }
 
 
 int shell_exit(char **args)
 {
         if (args[0] == NULL)
-                return (1);
+                return (0);
         else
                 return (0);
 }
