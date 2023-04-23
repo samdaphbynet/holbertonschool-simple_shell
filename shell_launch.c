@@ -5,7 +5,7 @@
  *
  */
 
-int shell_launch(char **args)
+int hsh_launch(char **args)
 {
 	pid_t child_pid;
 	int status = 0;
@@ -33,5 +33,5 @@ int shell_launch(char **args)
 			waitpid(child_pid, &status, WUNTRACED);
 		} while (!WIFEXITED(status) && !WIFSIGNALED(status));
 	}
-	return (status);
+	return (1);
 }

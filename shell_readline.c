@@ -5,60 +5,66 @@
  *
  */
 
-char *shell_readline(void)
+char *hsh_read_line(int argc, char **argv)
 {
-#ifdef USE_GET
-	char *line = NULL;
-	ssize_t bufsize = 0;
+#ifdef HSH_USE_STD_GETLINE
+        char *line = NULL;
+        ssize_t bufsize = 0; /* have getline allocate a buffer for us */
 
-	getline(&line, &bufsize, stdin);
-	return (line);
+        getline(&line, &bufsize, stdin);
+        return (line);
 #else
-#define SHELL_BUFSIZE 1024
-	int bufsize = SHELL_BUFSIZE;
-	int position = 0;
-	char *buffer;
-	char *new_buffer;
-	int c;
+#define HSH_RL_BUFSIZE 1024
+        int bufsize = HSH_RL_BUFSIZE;
+        int position = 0;
+        char *buffer = malloc(sizeof(char) * bufsize);
+        int c, i;
+        char *cmdline_args = "";
 
-	buffer = malloc(sizeof(char) * bufsize);
-	if (!buffer)
-	{
-		fprintf(stderr, "./shell: Error\n");
-		exit(EXIT_FAILURE);
-	}
-	while (1)
-	{
-		c = getchar();
+        if (!buffer)
+        {
+                fprintf(stderr, "hsh: allocation error\n");
+                exit(EXIT_FAILURE);
+        }
 
-		if (c == EOF)
-		{
-			exit(EXIT_FAILURE);
-		}
-		else if (c == '\n')
-		{
-			buffer[position] = '\0';
-			return (buffer);
-		}
-		else
-		{
-			buffer[position] = c;
-		}
-		position++;
+        for (i = 1; i < argc; i++) {
+            cmdline_args = strcat(cmdline_args, argv[i]);
+            cmdline_args = strcat(cmdline_args, " ");
+        }
 
-		if (position >= bufsize)
-		{
-			bufsize += SHELL_BUFSIZE;
-			new_buffer = realloc(buffer, bufsize);
+        strcat(buffer, cmdline_args);
+        while (1)
+        {
+                /* Read a character */
+                c = getchar();
 
-			if (!new_buffer)
-			{
-				fprintf(stderr, "./shell: Error\n");
-				free(buffer);
-				exit(EXIT_FAILURE);
-			}
-			buffer = new_buffer;
-		}
-	}
+                if (c == EOF)
+                {
+                        exit(EXIT_SUCCESS);
+                }
+                else if (c == '\n')
+                {
+                        buffer[position] = '\0';
+                        return (buffer);
+                }
+                else
+                {
+                        buffer[position] = c;
+                }
+                position++;
+
+                /* If we have exceeded the buffer, reallocate. */
+                if (position >= bufsize)
+                {
+                        bufsize += HSH_RL_BUFSIZE;
+                        buffer = realloc(buffer, bufsize);
+                        if (!buffer)
+                        {
+                                fprintf(stderr, "hsh: allocation error\n");
+                                exit(EXIT_FAILURE);
+                        }
+                }
+        }
 #endif
 }
+

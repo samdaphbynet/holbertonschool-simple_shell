@@ -7,9 +7,11 @@
 
 int main(int argc, char *argv[])
 {
+
 	if (argc > 0 && argv[0] != NULL)
-		shell_loop();
+		hsh_loop();
 	else
-		shell_loop();
+		hsh_loop();
+
 	return (EXIT_SUCCESS);
 }

@@ -21,7 +21,7 @@ int shell_builtins(void)
         return (sizeof(builtin_str) / sizeof(char *));
 }
 
-int shell_execute(char **args)
+int hsh_execute(char **args)
 {
 	int i;
 
@@ -32,7 +32,7 @@ int shell_execute(char **args)
 		if (strcmp(args[0], builtin_str[i]) == 0)
 			return ((builtin_func[i])(args));
 	}
-	if (shell_launch(args) == 0)
+	if (hsh_launch(args) == 0)
 		return (0);
 	return (1);
 }

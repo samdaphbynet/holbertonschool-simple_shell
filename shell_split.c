@@ -4,7 +4,7 @@
  *
  *
  */
-char **shell_split(char *line)
+char **hsh_split_line(char *line)
 {
 	int bufsize = SHELL_TOKEN, position = 0;
 	char **tokens;

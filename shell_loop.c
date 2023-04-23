@@ -4,30 +4,19 @@
  *
  */
 
-void shell_loop(void)
+void hsh_loop(void)
 {
-	char *line;
-	char **args;
-	int status;
+        char *line;
+        char **args;
+        int status = 0;
 
-	do
-	{
-		if (isatty(STDIN_FILENO))
-			printf("#cisfun$ ");
-		line = shell_readline();
-		if (!line)
-			break;
+        do {
+                printf("#CisFun$ ");
+                line = hsh_read_line(0, NULL);
+                args = hsh_split_line(line);
+                status = hsh_execute(args);
 
-		args = shell_split(line);
-
-		if (!args)
-		{
-			free(line);
-			break;
-		}
-		status = shell_execute(args);
-
-		free(line);
-		free(args);
-	} while (status);
+                free(line);
+                free(args);
+        } while (status);
 }

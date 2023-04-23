@@ -13,11 +13,13 @@
 #define SHELL_TOKEN 64
 #define SHELL_DELIM " \t\r\n\a"
 
-int shell_launch(char **args);
-char *shell_readline(void);
-char **shell_split(char *line);
-void shell_loop(void);
-int shell_exit(char **args);
-int shell_builtins(void);
-int shell_execute(char **args);
+int hsh_exit(char **args);
+
+int hsh_num_builtins(void);
+int hsh_launch(char **args);
+int hsh_execute(char **args);
+char *hsh_read_line(int argc, char **argv);
+char **hsh_split_line(char *line);
+void hsh_loop(void);
+
 #endif
