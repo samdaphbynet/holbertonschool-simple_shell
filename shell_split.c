@@ -8,7 +8,7 @@ char **shell_split(char *line)
 {
 	int bufsize = SHELL_TOKEN, position = 0;
 	char **tokens;
-	char *token, **tokens_backup;
+	char *token;
 
 	tokens = malloc(bufsize * sizeof(char *));
 
@@ -21,19 +21,17 @@ char **shell_split(char *line)
 
 	while (token != NULL)
 	{
-		tokens[position] = token;
+		tokens[position++] = token;
 		position++;
 
 		if (position >= bufsize)
 		{
 			bufsize += SHELL_TOKEN;
-			tokens_backup = tokens;
 			tokens = realloc(tokens, bufsize * sizeof(char *));
 
 			if (!tokens)
 			{
-				free(tokens_backup);
-				fprintf(stderr, "./shell: Error\n");
+				perror("reallocation de mémoire");
 				exit(EXIT_FAILURE);
 			}
 		}
