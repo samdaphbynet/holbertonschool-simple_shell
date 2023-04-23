@@ -4,6 +4,7 @@
  *
  *
  */
+int shell_exit(char **args);
 
 char *builtin_str[] = 
 {
