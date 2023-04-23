@@ -12,9 +12,11 @@ char **shell_split(char *line)
 
 	tokens = malloc(bufsize * sizeof(char *));
 
-	if (tokens == NULL)
+	if (!tokens)
+	{
+		fprintf(stderr, "./shell: Error\n");
 		exit(EXIT_FAILURE);
-
+	}
 	token = strtok(line, SHELL_DELIM);
 
 	while (token != NULL)

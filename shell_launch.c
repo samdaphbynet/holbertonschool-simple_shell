@@ -8,7 +8,7 @@
 int shell_launch(char **args)
 {
 	pid_t child_pid;
-	int status = 0;
+	int status;
 
 	child_pid = fork();
 
@@ -17,7 +17,7 @@ int shell_launch(char **args)
 	{
 		if (execvp(args[0], args) == -1)
 			perror("./shell");
-		exit(status);
+		exit(EXIT_FAILURE);
 	}
 	else if (child_pid < 0)
 		perror("./shell");

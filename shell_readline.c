@@ -21,8 +21,11 @@ char *shell_readline(void)
 	int c;
 
 	buffer = malloc(sizeof(char) * bufsize);
-	if (buffer == NULL)
+	if (!buffer)
+	{
+		fprintf(stderr, "./shell: Error\n");
 		exit(EXIT_FAILURE);
+	}
 	while (1)
 	{
 		c = getchar();
@@ -47,8 +50,9 @@ char *shell_readline(void)
 			bufsize += SHELL_BUFSIZE;
 			buffer = realloc(buffer, bufsize);
 
-			if (buffer == NULL)
+			if (!buffer)
 			{
+				fprintf(stderr, "./shell: Error\n");
 				exit(EXIT_FAILURE);
 			}
 		}
