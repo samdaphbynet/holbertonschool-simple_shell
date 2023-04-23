@@ -28,5 +28,5 @@ int shell_launch(char **args)
 			waitpid(child_pid, &status, WUNTRACED);
 		} while (!WIFEXITED(status) && !WIFSIGNALED(status));
 	}
-	return (1);
+	return (0);
 }
