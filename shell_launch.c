@@ -11,16 +11,21 @@ int shell_launch(char **args)
 	int status;
 
 	child_pid = fork();
-
+	
+	if (child_pid == -1)
+	{
+		perror("./shell: Error fork");
+		exit(EXIT_FAILURE);
+	}
 
 	if (child_pid == 0)
 	{
 		if (execvp(args[0], args) == -1)
+		{
 			perror("./shell");
-		exit(EXIT_FAILURE);
+			exit(EXIT_FAILURE);
+		}
 	}
-	else if (child_pid < 0)
-		perror("./shell");
 	else
 	{
 		do
@@ -28,5 +33,5 @@ int shell_launch(char **args)
 			waitpid(child_pid, &status, WUNTRACED);
 		} while (!WIFEXITED(status) && !WIFSIGNALED(status));
 	}
-	return (0);
+	return (1);
 }
