@@ -13,13 +13,6 @@
 #define HSH_TOK_BUFSIZE 64
 #define HSH_TOK_DELIM " \t\r\n\a"
 
-int hsh_exit(char **args);
-
-int hsh_num_builtins(void);
-int hsh_launch(char **args);
-int hsh_execute(char **args);
-char *hsh_read_line(int argc, char **argv);
-char **hsh_split_line(char *line);
-void hsh_loop(void);
+char **get_input(char *input);
 
 #endif
