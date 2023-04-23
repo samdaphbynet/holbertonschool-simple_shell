@@ -18,6 +18,7 @@ char *shell_readline(void)
 	int bufsize = SHELL_BUFSIZE;
 	int position = 0;
 	char *buffer;
+	char *new_buffer;
 	int c;
 
 	buffer = malloc(sizeof(char) * bufsize);
@@ -48,13 +49,15 @@ char *shell_readline(void)
 		if (position >= bufsize)
 		{
 			bufsize += SHELL_BUFSIZE;
-			buffer = realloc(buffer, bufsize);
+			new_buffer = realloc(buffer, bufsize);
 
-			if (!buffer)
+			if (!new_buffer)
 			{
 				fprintf(stderr, "./shell: Error\n");
+				free(buffer);
 				exit(EXIT_FAILURE);
 			}
+			buffer = new_buffer;
 		}
 	}
 #endif
