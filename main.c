@@ -23,11 +23,6 @@ int main()
 
         if (strcmp(input, "exit") == 0)
 	{
-		for (i = 0; command[i] != NULL; i++)
-		{
-			free(command[i]);
-		}
-		free(command);
 		break;
 	}
         command = get_input(input);
