@@ -35,8 +35,8 @@ int main()
         {
             if (execvp(command[0], command) == -1)
             {
-                printf("./shell: No such file or directory\n");
-                exit(EXIT_FAILURE);
+		    fprintf(stderr, "./hsh: %d: %s: not found\n", getpid(), command[0]);
+                    exit(127);
             }
         }
         else
