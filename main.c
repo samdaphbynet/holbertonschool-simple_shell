@@ -34,7 +34,7 @@ int main()
 		if (child_pid == -1)
 		{
 			perror("Fork failed");
-			exit(1);
+			exit(EXIT_FAILURE);
 		}
 		if (child_pid == 0)
 		{
@@ -43,7 +43,7 @@ int main()
 				fprintf(stderr, "./hsh: %d: %s: not found\n", getpid(), command[0]);
 				free(command[0]);
 				free(command);
-				exit(127);
+				exit(EXIT_FAILURE);
 			}
 		}
 		else
