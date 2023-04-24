@@ -5,7 +5,7 @@
  *
 */
 
-#define MAX_ARG 128
+#define MAX_ARG 1024
 
 char **get_input(char *input)
 {
