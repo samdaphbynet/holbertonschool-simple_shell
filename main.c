@@ -18,7 +18,8 @@ int main()
         if (isatty(STDIN_FILENO))
             printf("#cisfun$ ");
         if (fgets(input, sizeof(input), stdin) == NULL)
-            exit(EXIT_FAILURE);
+            break;
+
         input[strcspn(input, "\n")] = '\0';
 
         if (strcmp(input, "exit") == 0)
@@ -31,7 +32,7 @@ int main()
         if (child_pid == -1)
         {
             perror("Fork failed");
-            exit(EXIT_FAILURE);
+            exit(1);
         }
         if (child_pid == 0)
         {
