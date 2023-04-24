@@ -38,7 +38,7 @@ int main()
             if (execvp(command[0], command) == -1)
             {
 		    fprintf(stderr, "./hsh: %d: %s: not found\n", getpid(), command[0]);
-                    exit(status);
+                    exit(EXIT_FAILURE);
             }
         }
         else
