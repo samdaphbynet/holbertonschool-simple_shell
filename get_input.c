@@ -50,7 +50,5 @@ char **get_input(char *input)
     command[i] = NULL;
 
     free(input_copy);
-
     return command;
 }
-
