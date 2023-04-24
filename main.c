@@ -11,7 +11,7 @@ int main()
 	char **command = NULL;
 	char input[2024];
 	pid_t child_pid;
-	int status = 0;
+	int status;
 	int i;	
 
 	while (1)
@@ -48,7 +48,14 @@ int main()
 		}
 		else
 		{
-			waitpid(child_pid, &status, WUNTRACED);
+			if (waitpid(child_pid, &status, 0) == -1)
+			{
+				exit(EXIT_FAILURE);
+			}
+			if (WIFEXITED(status))
+			{
+				status = WEXITSTATUS(status);
+			}
 		}
 		for (i = 0; command[i] != NULL; i++)
 			free(command[i]);
