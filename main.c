@@ -18,18 +18,25 @@ int main()
         if (isatty(STDIN_FILENO))
             printf("#cisfun$ ");
         if (fgets(input, sizeof(input), stdin) == NULL)
-            break;
+            exit(EXIT_FAILURE);
         input[strcspn(input, "\n")] = '\0';
 
         if (strcmp(input, "exit") == 0)
-            break;
+	{
+		for (i = 0; command[i] != NULL; i++)
+		{
+			free(command[i]);
+		}
+		free(command);
+		break;
+	}
         command = get_input(input);
         child_pid = fork();
 
         if (child_pid == -1)
         {
             perror("Fork failed");
-            exit(1);
+            exit(EXIT_FAILURE);
         }
         if (child_pid == 0)
         {
