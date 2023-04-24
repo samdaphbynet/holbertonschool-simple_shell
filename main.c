@@ -43,7 +43,7 @@ int main()
 				fprintf(stderr, "./hsh: %d: %s: not found\n", getpid(), command[0]);
 				free(command[0]);
 				free(command);
-				exit(EXIT_FAILURE);
+				exit(127);
 			}
 		}
 		else
