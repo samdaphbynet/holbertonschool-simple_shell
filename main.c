@@ -9,10 +9,10 @@
 int main()
 {
 	char **command = NULL;
-	char input[1024] = {0};
+	char input[2024];
 	pid_t child_pid;
 	int status = 0;
-	int i = 0;
+	int i;	
 
 	while (1)
 	{
@@ -41,8 +41,8 @@ int main()
 			if (execvp(command[0], command) == -1)
 			{
 				fprintf(stderr, "./hsh: %d: %s: not found\n", getpid(), command[0]);
-				free(command);
 				free(command[0]);
+				free(command);
 				exit(EXIT_FAILURE);
 			}
 		}
@@ -50,11 +50,8 @@ int main()
 		{
 			waitpid(child_pid, &status, WUNTRACED);
 		}
-
 		for (i = 0; command[i] != NULL; i++)
-		{
 			free(command[i]);
-		}
 		free(command);
 	}
 	return (0);

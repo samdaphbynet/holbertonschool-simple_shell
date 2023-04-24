@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define MAX_ARG 1024
+#define MAX_ARG 2024
 
 char **get_input(char *input)
 {
@@ -20,7 +20,6 @@ char **get_input(char *input)
 	command = malloc(sizeof(char *) * (MAX_ARG + 1));
 	if (command == NULL)
 	{
-		free(command);
 		fprintf(stderr, "Failed aloccation.\n");
 		exit(EXIT_FAILURE);
 	}
