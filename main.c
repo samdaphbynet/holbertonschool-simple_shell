@@ -15,7 +15,7 @@ int main(void)
 	while (1)
 	{
 		if (isatty(0))
-			printf("hsh$ ");
+			printf("#cisfun$ ");
 
 		buff_size = getline(&buff, &read_size, stdin);
 		if (buff_size == -1 || strcmp("exit\n", buff) == 0)
@@ -41,9 +41,23 @@ int main(void)
 		args[0] = search_path(args[0]);
 
 		if (args[0] != NULL)
-			status = execute(args);
+		{
+			errno = 0;
+			if (access(args[0], X_OK) == 0)
+			{
+				status = execute(args);
+			}
+			else
+			{
+				perror("./shell: Error")
+				status = 1;
+			}
+		}
 		else
-			perror("Error");
+		{
+			perror("command not found");
+			status = 1;
+		}
 		free(args);
 	}
 	return (status);
