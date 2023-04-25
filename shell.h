@@ -10,9 +10,12 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-#define HSH_TOK_BUFSIZE 64
-#define HSH_TOK_DELIM " \t\r\n\a"
+extern char **environ;
 
-char **get_input(char *input);
+char *search_path(char *command);
+char **_split(char *str, char *sep);
+void _env(void);
+int execute(char **args);
+int empty_line(char *buff);
 
 #endif
