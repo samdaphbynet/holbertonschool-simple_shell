@@ -1,65 +1,50 @@
 #include "shell.h"
 
 /**
- *
- *
+ * main - entry point.
+ * Return: status.
  */
 
-
-int main()
+int main(void)
 {
-	char **command = NULL;
-	char input[2024];
-	pid_t child_pid;
-	int status;
-	int i;	
+	char *buff = NULL, **args;
+	size_t read_size = 0;
+	ssize_t buff_size = 0;
+	int status = 0;
 
 	while (1)
 	{
-		if (isatty(STDIN_FILENO))
-			printf("#cisfun$ ");
-		if (fgets(input, sizeof(input), stdin) == NULL)
-			break;
+		if (isatty(0))
+			printf("hsh$ ");
 
-		input[strcspn(input, "\n")] = '\0';
-
-		if (strcmp(input, "exit") == 0)
+		buff_size = getline(&buff, &read_size, stdin);
+		if (buff_size == -1 || strcmp("exit\n", buff) == 0)
 		{
+			free(buff);
 			break;
 		}
-		command = get_input(input);
+		buff[buff_size - 1] = '\0';
 
-		child_pid = fork();
+		if (strcmp("env", buff) == 0)
+		{
+			_env();
+			continue;
+		}
 
-		if (child_pid == -1)
+		if (empty_line(buff) == 1)
 		{
-			perror("Fork failed");
-			exit(EXIT_FAILURE);
+			status = 0;
+			continue;
 		}
-		if (child_pid == 0)
-		{
-			if (execvp(command[0], command) == -1)
-			{
-				fprintf(stderr, "./hsh: %d: %s: not found\n", getpid(), command[0]);
-				free(command[0]);
-				free(command);
-				exit(EXIT_FAILURE);
-			}
-		}
+
+		args = _split(buff, " ");
+		args[0] = search_path(args[0]);
+
+		if (args[0] != NULL)
+			status = execute(args);
 		else
-		{
-			if (waitpid(child_pid, &status, 0) == -1)
-			{
-				exit(EXIT_FAILURE);
-			}
-			if (WIFEXITED(status))
-			{
-				status = WEXITSTATUS(status);
-			}
-		}
-		for (i = 0; command[i] != NULL; i++)
-			free(command[i]);
-		free(command);
+			perror("Error");
+		free(args);
 	}
-	return (0);
+	return (status);
 }
