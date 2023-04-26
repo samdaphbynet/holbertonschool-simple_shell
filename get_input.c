@@ -3,10 +3,9 @@
 /**
  * execute - execute command path
  * @args: arguments passed
+ * @args: string input
  * Return: exit status
  */
-
-char **_split(char *str, char *sep);
 
 int execute(char **args)
 {
@@ -27,8 +26,7 @@ int execute(char **args)
 	return (status);
 }
 /**
- *
- *
+ * _env - Displays the current environment.
  */
 
 void _env(void)
@@ -43,8 +41,9 @@ void _env(void)
 }
 
 /**
- *
- *
+ * empty_line - Check if a string is empty or only contains spaces
+ * @buff: String to check.
+ * Return: 1 if the string is empty or only contains spaces, 0 otherwise
  */
 
 int empty_line(char *buff)
@@ -60,8 +59,10 @@ int empty_line(char *buff)
 }
 
 /**
- *
- *
+ * _split - splits a string into an array of substrings
+ * @str: string to split
+ * @sep: separator used to split the string
+ * Return: array of substrings
  */
 
 char **_split(char *str, char *sep)
