@@ -21,7 +21,7 @@ int main(void)
 		if (buff_size == -1 || strcmp("exit\n", buff) == 0)
 		{
 			free(buff);
-			break;
+			exit(status);
 		}
 		buff[buff_size - 1] = '\0';
 
@@ -41,23 +41,9 @@ int main(void)
 		args[0] = search_path(args[0]);
 
 		if (args[0] != NULL)
-		{
-			errno = 0;
-			if (access(args[0], X_OK) == 0)
-			{
-				status = execute(args);
-			}
-			else
-			{
-				perror("./shell: Error")
-				status = 1;
-			}
-		}
+			status = execute(args);
 		else
-		{
-			perror("command not found");
-			status = 1;
-		}
+			perror("Error");
 		free(args);
 	}
 	return (status);

@@ -8,21 +8,39 @@
 
 int execute(char **args)
 {
-	int id = fork(), status;
-
-	if (id == 0)
+	int status;
+	pid_t pid;
+	char *path = search_path(args[0]);
+	if (path == NULL)
 	{
-		if (execve(args[0], args, environ) == -1)
-			perror("Error");
+		perror(args[0]);
+		return 1;
+	}
+	status = 0;
+	pid = fork();
+	if (pid == -1)
+	{
+		perror("fork");
+		return 1;
+	}
+	if (pid == 0)
+	{
+		char **argv = _split(args[1], " ");
+		char *envp[] = { NULL };
+		char *command = malloc(strlen(path) + strlen(args[1]) + 2);
+		sprintf(command, "%s %s", path, args[1]);
+		execve(command, argv, envp);
+		perror(command);
+		free(command);
+		free(argv);
+		exit(EXIT_FAILURE);
 	}
 	else
 	{
 		wait(&status);
-		if (WIFEXITED(status))
-			status = WEXITSTATUS(status);
 	}
-
-	return (status);
+	free(path);
+	return status;
 }
 
 /**

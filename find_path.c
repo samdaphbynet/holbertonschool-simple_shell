@@ -2,8 +2,8 @@
 
 /**
  * search_path - search file between the path
- * @command: cmd
- * Return: cmd path
+ * @command: command passed of input
+ * Return: command path
  */
 
 char *search_path(char *command)
