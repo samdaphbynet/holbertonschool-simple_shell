@@ -20,7 +20,7 @@ char *search_path(char *command)
 	path_cpy = malloc(strlen(path) + 1);
 
 	path_cpy = strcpy(path_cpy, path);
-	path_split = _split(path_cpy, ":");
+	path_split = _split(path_cpy, " ");
 
 	while (path_split[i])
 	{
