@@ -12,6 +12,8 @@
 
 extern char **environ;
 
+/*ProtoType of all function*/
+
 char *search_path(char *command);
 char **_split(char *str, char *sep);
 void _env(void);
