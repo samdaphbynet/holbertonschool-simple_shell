@@ -18,7 +18,8 @@ int process(char **args)
         if (execvp(args[0], args) == -1)
         {
             perror("Error: process child");
-            return (0);
+            
+            
         }
     }
     else if (pid < 0)
@@ -26,12 +27,10 @@ int process(char **args)
         perror("Error: forking");
     }
     else
-    {
-        do
-        {
-            waitpid(pid, &status, WUNTRACED);
-        } while (!WIFEXITED(status) && !WIFSIGNALED(status));
-        
-    }
-    return (-1);
+	{
+		wait(&status);
+		if (WIFEXITED(status))
+			status = WEXITSTATUS(status);
+	}
+	return (status);
 }
