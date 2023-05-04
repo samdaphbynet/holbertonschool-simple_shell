@@ -1,76 +1,76 @@
 #include "shell.h"
 
 /**
- * execute - execute command path
- * @args: arguments passed
- * @args: string input
- * Return: exit status
- */
+ * own_cd - function that change directory
+ * @args: target directory
+ * Return: 1 on success , 0 otherwise
+*/
 
-int execute(char **args)
+int own_cd(char **args)
 {
-	int id = fork(), status;
-
-	if (id == 0)
+	if (args[1] == NULL)
 	{
-		if (execve(args[0], args, environ) == -1)
-			perror("Error");
+		fprintf(stderr, "Error cd\n");
 	}
 	else
 	{
-		wait(&status);
-		if (WIFEXITED(status))
-			status = WEXITSTATUS(status);
+		if (chdir(args[1]) != 0)
+		{
+			perror("Errorin function cd\n");
+		}
 	}
-
-	return (status);
+	return (-1);
 }
+
 /**
  * _env - Displays the current environment.
  */
 
-void _env(void)
+int own_env(char **args)
 {
 	int i = 0;
+	(void)(**args);
 
 	while (environ[i])
 	{
-		printf("%s\n", environ[i]);
+		write(STDOUT_FILENO, environ[i], strlen(environ[i]));
+		write(STDOUT_FILENO, "\n", 1);
 		i++;
 	}
+	return (-1);
 }
 
+
 /**
- * empty_line - Check if a string is empty or only contains spaces
- * @buff: String to check.
- * Return: 1 if the string is empty or only contains spaces, 0 otherwise
- */
+ * own_exit - function that exit own shell
+ * @args: empty argument
+ * Return: 0 for exit own shell
+*/
 
-int empty_line(char *buff)
+int own_exit(char **args)
 {
-	int i;
-
-	for (i = 0; buff[i] != '\0'; i++)
+	if (args[1])
 	{
-		if (buff[i] != ' ')
-			return (0);
+		return (atoi(args[1]));
 	}
-	return (1);
+	else
+	{
+		return (0);
+	}
 }
 
 /**
  * _split - splits a string into an array of substrings
  * @str: string to split
- * @sep: separator used to split the string
  * Return: array of substrings
  */
 
-char **_split(char *str, char *sep)
+char **_split(char *str)
 {
 	char *aux, **split_str;
 	int i = 0;
 
-	aux = strtok(str, sep);
+	aux = strtok(str, TOK_DELIM);
 	split_str = (char **)calloc(100, sizeof(char *));
 
 	if (!split_str)
@@ -82,7 +82,7 @@ char **_split(char *str, char *sep)
 	while (aux)
 	{
 		split_str[i] = aux;
-		aux = strtok(NULL, sep);
+		aux = strtok(NULL, TOK_DELIM);
 		i++;
 	}
 	return (split_str);
