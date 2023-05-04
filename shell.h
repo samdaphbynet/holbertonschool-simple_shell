@@ -10,14 +10,30 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
+#define TOK_DELIM " \t\r\n\a"
+
 extern char **environ;
 
 /*ProtoType of all function*/
 
-char *search_path(char *command);
-char **_split(char *str, char *sep);
-void _env(void);
+void shell_active(void);
+void shell_no_active(void);
+
+char *read_stream(void);
+char *read_line(void);
 int execute(char **args);
-int empty_line(char *buff);
+int process(char **args);
+
+char **_split(char *str);
+int own_env(char **args);
+int own_exit(char **args);
+int own_cd(char **args);
+
+
+
+
+
+
+
 
 #endif
