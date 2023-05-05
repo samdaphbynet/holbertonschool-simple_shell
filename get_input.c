@@ -67,23 +67,37 @@ int own_exit(char **args)
 
 char **_split(char *str)
 {
-	char *aux, **split_str;
+	int bufsize = 64;
 	int i = 0;
+	char **tokens = malloc(bufsize * sizeof(char *));
+	char *token;
 
-	aux = strtok(str, TOK_DELIM);
-	split_str = (char **)calloc(100, sizeof(char *));
-
-	if (!split_str)
+	if (!tokens)
 	{
-		free(split_str);
-		return (NULL);
+		fprintf(stderr, "error in _split\n");
+		exit(EXIT_FAILURE);
 	}
-
-	while (aux)
+	token = strtok(str, TOK_DELIM);
+	while (token != NULL)
 	{
-		split_str[i] = aux;
-		aux = strtok(NULL, TOK_DELIM);
+		if (token[0] == '#')
+		{
+			break;
+		}
+		tokens[i] = token;
 		i++;
+		if (i >= bufsize)
+		{
+			bufsize += bufsize;
+			tokens = realloc(tokens, bufsize * sizeof(char *));
+			if (!tokens)
+			{
+				fprintf(stderr, "reallocation error in split");
+				exit(EXIT_FAILURE);
+			}
+		}
+		token = strtok(NULL, TOK_DELIM);
 	}
-	return (split_str);
+	tokens[i] = NULL;
+	return (tokens);
 }
