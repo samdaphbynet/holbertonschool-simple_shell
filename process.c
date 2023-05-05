@@ -26,13 +26,21 @@ int process(char **args)
     else if (pid < 0)
     {
         perror("Error: forking");
+        return (-1);
     }
     else
 	{
 		do {
 			waitpid(pid, &status, WUNTRACED);
 		} while (!WIFEXITED(status) && !WIFSIGNALED(status));
-	}
 
-	return(-1);
+        if (WIFEXITED(status))
+        {
+            return (WEXITSTATUS(status));
+        }
+        else
+        {
+            return (-1);
+        }
+	}
 }
