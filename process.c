@@ -18,9 +18,10 @@ int process(char **args)
         if (execvp(args[0], args) == -1)
         {
             perror("Error: process child");
-            
-            
+            free(args[0]);
         }
+        free(args);
+        exit(0);
     }
     else if (pid < 0)
     {
@@ -28,9 +29,10 @@ int process(char **args)
     }
     else
 	{
-		wait(&status);
-		if (WIFEXITED(status))
-			status = WEXITSTATUS(status);
+		do {
+			waitpid(pid, &status, WUNTRACED);
+		} while (!WIFEXITED(status) && !WIFSIGNALED(status));
 	}
-	return (status);
+    printf("status [%d]\n", status);
+	return(-1);
 }
