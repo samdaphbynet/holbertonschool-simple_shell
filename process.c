@@ -33,6 +33,5 @@ int process(char **args)
 			waitpid(pid, &status, WUNTRACED);
 		} while (!WIFEXITED(status) && !WIFSIGNALED(status));
 	}
-    printf("status [%d]\n", status);
 	return(-1);
 }
