@@ -15,7 +15,7 @@ int process(char **args)
 
     if (pid == 0)
     {
-        if (execvp(args[0], args) == -1)
+        if (execve(args[0], args, environ) == -1)
         {
             perror("Error: process child");
             free(args[0]);
@@ -33,5 +33,6 @@ int process(char **args)
 			waitpid(pid, &status, WUNTRACED);
 		} while (!WIFEXITED(status) && !WIFSIGNALED(status));
 	}
+
 	return(-1);
 }
