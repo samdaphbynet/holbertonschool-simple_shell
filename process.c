@@ -21,7 +21,7 @@ int process(char **args)
             free(args[0]);
         }
         free(args);
-        exit(0);
+        exit(EXIT_FAILURE);
     }
     else if (pid < 0)
     {
